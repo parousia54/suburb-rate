@@ -1,5 +1,6 @@
 package com.pinkdroid.view;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,27 +8,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-public class SuburbRateScreen extends Activity implements ScreenUpdater {
+public class SuburbRateScreen extends Activity implements ScreenUpdater{
 	private ProgressDialog progress;
-	private String dialogMessage = "", dialogTitle = "";
+	private String dialogMessage="", dialogTitle="";
 	private AlertDialog.Builder builder;
-	private AlertDialog alert;
-
+	private AlertDialog alert;	
 	@Override
-	public void displayMessage(String title, String message) {
-		this.dialogMessage = message;
-		this.dialogTitle = title;
-		this.showDialog(DIALOG_MESSAGE);
-	}
-
-	protected void displayProgress(String title, String message) {
-		dialogMessage = message;
-		dialogTitle = title;
-		showDialog(DIALOG_PROGRESS);
-	}
-
-	@Override
-	public void onCreate(Bundle bundle) {
+	public void onCreate(Bundle bundle){
 		super.onCreate(bundle);
 		builder = new AlertDialog.Builder(this);
 		progress = new ProgressDialog(this);
@@ -35,54 +22,62 @@ public class SuburbRateScreen extends Activity implements ScreenUpdater {
 	}
 
 	@Override
-	protected Dialog onCreateDialog(int id) {
-		final Dialog dialog = new Dialog(this);
-		switch (id) {
-		case DIALOG_MESSAGE: {
+	public void update(Object data) {
+		if(progress!=null)
+			if(progress.isShowing())
+				progress.dismiss();
+	}
+	protected void displayProgress(String title, String message){
+		dialogMessage=message;
+		dialogTitle=title;
+		showDialog(DIALOG_PROGRESS);
+	}
+	@Override
+    protected Dialog onCreateDialog(int id)    {
+        final Dialog dialog = new Dialog(this);
+        switch(id){
+        case DIALOG_MESSAGE:{
 			builder.setMessage(dialogMessage)
 					.setIcon(android.R.drawable.ic_dialog_info)
 					.setTitle(dialogTitle)
 					.setCancelable(false)
 					.setPositiveButton("Ok",
 							new DialogInterface.OnClickListener() {
-								@Override
 								public void onClick(DialogInterface d, int id) {
 									d.cancel();
 								}
 							});
 			alert = builder.create();
 			return alert;
-		}
-		case DIALOG_PROGRESS: {
-			progress = new ProgressDialog(this);
-			progress.setCancelable(false);
-			progress.setMessage(dialogMessage);
-			return progress;
-		}
-		}
-		return dialog;
-	}
-
+        }
+			case DIALOG_PROGRESS:{
+				progress = new ProgressDialog(this);
+				progress.setCancelable(false);
+				progress.setMessage(dialogMessage);
+				return progress;
+			}
+        }
+        return dialog;
+    }
 	@Override
-	public void onPrepareDialog(int id, Dialog dialog) {
-		switch (id) {
-		case DIALOG_PROGRESS: {
-			((ProgressDialog) dialog).setMessage(dialogMessage);
-			break;
-		}
-		case DIALOG_MESSAGE: {
-			AlertDialog alert = (AlertDialog) dialog;
-			alert.setMessage(dialogMessage);
-			alert.setTitle(dialogTitle);
-			break;
-		}
+	public void onPrepareDialog(int id, Dialog dialog){
+		switch(id){		 	
+		 	case DIALOG_PROGRESS:{
+				((ProgressDialog)dialog).setMessage(dialogMessage);
+				break;
+			}
+		 	case DIALOG_MESSAGE:{
+		 		AlertDialog alert = (AlertDialog)dialog;
+		 		alert.setMessage(dialogMessage);
+		 		alert.setTitle(dialogTitle);
+		 		break;
+		 	}
 		}
 	}
-
 	@Override
-	public void update(Object data) {
-		if (progress != null)
-			if (progress.isShowing())
-				progress.dismiss();
+	public void displayMessage(String title, String message) {
+		this.dialogMessage=message;
+		this.dialogTitle=title;
+		this.showDialog(DIALOG_MESSAGE);
 	}
 }

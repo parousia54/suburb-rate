@@ -12,7 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.pinkdroid.logic.Controller;
 import com.pinkdroid.model.Criterion;
 
-public class ExternalFileReader {
+public class ExternalFileReader{
 
 	private boolean finishPart1 = false;
 
@@ -23,21 +23,15 @@ public class ExternalFileReader {
 	private final int bufferSize = 1024 * 5;
 
 	private Controller controller;
-
+	
 	private Collection<Criterion> criteria;
 
 	public ExternalFileReader(Controller controller) {
 		this.controller = controller;
 	}
 
-	public Collection<Criterion> getCriteria() {
-		String criteriaString = readTxtPart1();
-		Gson gson = new Gson();
-		Type collectionType = new TypeToken<Collection<Criterion>>() {
-		}.getType();
-		Collection<Criterion> ints2 = gson.fromJson(criteriaString,
-				collectionType);
-		return ints2;
+	public void setInputStream(InputStream input) {
+		inputPart1 = new BufferedInputStream(input);
 	}
 
 	private String readTxtPart1() {
@@ -59,8 +53,15 @@ public class ExternalFileReader {
 		return null;
 	}
 
-	public void setInputStream(InputStream input) {
-		inputPart1 = new BufferedInputStream(input);
+
+	public Collection<Criterion> getCriteria() {
+		String criteriaString = readTxtPart1();
+		Gson gson = new Gson();
+		Type collectionType = new TypeToken<Collection<Criterion>>(){}.getType();
+		Collection<Criterion> ints2 = gson.fromJson(criteriaString, collectionType);
+		return ints2;
 	}
+
+	
 
 }

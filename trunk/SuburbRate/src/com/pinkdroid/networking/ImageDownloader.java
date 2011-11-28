@@ -2,6 +2,9 @@ package com.pinkdroid.networking;
 
 import java.util.HashMap;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 public class ImageDownloader implements Worker<String, byte[]> {
 
 	public ImageDownloader() {

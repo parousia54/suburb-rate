@@ -7,37 +7,30 @@ public class QueryResponse {
 	private int totalResults;
 	private int totalPages;
 	private LinkedList<SensisResult> results;
-
 	public int getCount() {
 		return count;
 	}
-
-	public LinkedList<SensisResult> getResults() {
-		return results;
-	}
-
-	public int getTotalPages() {
-		return totalPages;
-	}
-
-	public int getTotalResults() {
-		return totalResults;
-	}
-
 	public void setCount(int count) {
 		this.count = count;
 	}
-
-	public void setResults(LinkedList<SensisResult> results) {
-		this.results = results;
+	public int getTotalResults() {
+		return totalResults;
 	}
-
-	public void setTotalPages(int totalPages) {
-		this.totalPages = totalPages;
-	}
-
 	public void setTotalResults(int totalResults) {
 		this.totalResults = totalResults;
 	}
-
+	public int getTotalPages() {
+		return totalPages;
+	}
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
+	}
+	public LinkedList<SensisResult> getResults() {
+		return results;
+	}
+	public void setResults(LinkedList<SensisResult> results) {
+		this.results = results;
+	}
+	
+	
 }

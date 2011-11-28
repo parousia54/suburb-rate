@@ -33,7 +33,10 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
-public class NetworkEngine {
+import android.util.Log;
+
+public class NetworkEngine
+{
 
 	private static final int MAX_CONNECTIONS = 20;
 
@@ -77,25 +80,10 @@ public class NetworkEngine {
 
 	private static NetworkEngine instance = null;
 
-	public static String byteArrayToHex(byte[] bytes) {
-		StringBuilder sb = new StringBuilder(bytes.length * 2);
-		for (int i = 0; i < bytes.length; i++) {
-			sb.append(String.format("%02x", bytes[i]));
-		}
-		return sb.toString();
-	}
-
-	public static NetworkEngine getInstance() {
-		if (instance == null) {
-			instance = new NetworkEngine();
-		}
-
-		return instance;
-	}
-
 	protected ThreadSafeClientConnManager connectionManager;
 
-	protected NetworkEngine() {
+	protected NetworkEngine()
+	{
 		HttpParams connParams = new BasicHttpParams();
 		ConnManagerParams.setMaxTotalConnections(connParams, MAX_CONNECTIONS);
 		ConnManagerParams.setTimeout(connParams, THREAD_TIMEOUT);
@@ -104,27 +92,21 @@ public class NetworkEngine {
 		HttpConnectionParams.setTcpNoDelay(connParams, true);
 
 		SchemeRegistry schReg = new SchemeRegistry();
-		schReg.register(new Scheme("http", PlainSocketFactory
-				.getSocketFactory(), HTTP_PORT));
-		schReg.register(new Scheme("https",
-				SSLSocketFactory.getSocketFactory(), HTTPS_PORT));
-		// schReg.register(new Scheme("https", new CustomSSLSocketFactory(),
-		// HTTPS_PORT));
+		schReg.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), HTTP_PORT));
+				schReg.register(new Scheme("https",
+						SSLSocketFactory.getSocketFactory(), HTTPS_PORT));
+//		schReg.register(new Scheme("https", new CustomSSLSocketFactory(), HTTPS_PORT));
 		connectionManager = new ThreadSafeClientConnManager(connParams, schReg);
 	}
 
-	public byte[] downloadImage(String url, Map<String, String> headers,
-			Map<String, String> params, int timeout) throws Exception {
-		return getRaw(url, headers, params, timeout);
-	}
-
-	protected HttpClient getHttpClient(int timeout) {
+	protected HttpClient getHttpClient(int timeout)
+	{
 		HttpParams connParams = new BasicHttpParams();
 		if (timeout < 0)
 			timeout = SOCKET_TIMEOUT;
 		ConnManagerParams.setMaxTotalConnections(connParams, MAX_CONNECTIONS);
 		ConnPerRoute connPerRoute = new ConnPerRoute() {
-
+			
 			@Override
 			public int getMaxForRoute(HttpRoute route) {
 				// TODO Auto-generated method stub
@@ -143,113 +125,118 @@ public class NetworkEngine {
 		return new DefaultHttpClient(connectionManager, connParams);
 	}
 
+	public static NetworkEngine getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new NetworkEngine();
+		}
+
+		return instance;
+	}
+
+	public static String byteArrayToHex(byte[] bytes)
+	{
+		StringBuilder sb = new StringBuilder(bytes.length * 2);
+		for (int i = 0; i < bytes.length; i++)
+		{
+			sb.append(String.format("%02x", bytes[i]));
+		}
+		return sb.toString();
+	}
+
+
 	/*
-	 * This is a generic method to send GET request with a set of headers and
-	 * raw data
+	 * This is a generic method to send POST request with a set of headers and raw data
 	 */
-	public byte[] getRaw(String url, Map<String, String> headers,
-			Map<String, String> params, int timeout) throws Exception {
-
-		if (params != null && !url.contains("?")) {
-			ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
-			for (String key : params.keySet())
-				parameters.add(new BasicNameValuePair(key, params.get(key)));
-			url += "?"
-					+ URLEncodedUtils.format(parameters,
-							HTTP.DEFAULT_CONTENT_CHARSET);
-		} else if (params != null && url.contains("?")) {
-			ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
-			for (String key : params.keySet())
-				parameters.add(new BasicNameValuePair(key, params.get(key)));
-			url += "&"
-					+ URLEncodedUtils.format(parameters,
-							HTTP.DEFAULT_CONTENT_CHARSET);
+	public HttpResponse postRaw(String url, Map<String, String> headers, byte[] data, int timeout)
+		throws ClientProtocolException, IOException
+	{
+		HttpPost httppost = new HttpPost(url);
+		for (String key : headers.keySet())
+		{
+			httppost.addHeader(key, headers.get(key));
+			System.out.println("HEADER TO BE POSTED: " + key + "   " + headers.get(key));
 		}
 
-		HttpGet httpget = new HttpGet(url);
-		if (headers != null) {
-			for (String key : headers.keySet())
-				httpget.addHeader(key, headers.get(key));
-		}
+		HttpEntity sendentity = new ByteArrayEntity(data);
 
+		httppost.setEntity(sendentity);
 		HttpClient httpclient = getHttpClient(timeout);
-		HttpResponse response = httpclient.execute(httpget);
+		return httpclient.execute(httppost);
+	}
+
+	/*
+	 * This is a generic method to send POST request with a set of headers and urlencoded parameters
+	 */
+	public HttpResponse postUrlencoded(String url, Map<String, String> headers, Map<String, String> params, int timeout)
+		throws ClientProtocolException, IOException
+	{
+		ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
+		if (params != null)
+			for (String key : params.keySet())
+				parameters.add(new BasicNameValuePair(key, params.get(key)));
+
+		if (headers == null)
+			headers = new HashMap<String, String>();
+		headers.put("Content-Type", "application/x-www-form-urlencoded");
+
+		return postRaw(url, headers, URLEncodedUtils.format(parameters, HTTP.DEFAULT_CONTENT_CHARSET).getBytes(),
+			timeout);
+	}
+
+	
+//	public byte[] postEncryptedData(String url, Map<String, String> headers, Map<String, String> params, int timeout)
+//		throws Exception
+//	{
+//		ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
+//		for (String key : params.keySet())
+//			parameters.add(new BasicNameValuePair(key, params.get(key)));
+//		byte[] data = URLEncodedUtils.format(parameters, HTTP.DEFAULT_CONTENT_CHARSET).getBytes();
+//		return postEncryptedData(url, headers, data, timeout);
+//	}
+
+	public byte[] postUnencrypted(String url, Map<String, String> headers, Map<String, String> params, int timeout)
+		throws Exception
+	{
+		HttpResponse response;
+		response = postUrlencoded(url, headers, params, timeout);
 		if (response == null)
 			throw new Exception("Null response");
 		if (response.getStatusLine().getStatusCode() != 200)
-			throw new Exception("Server return code "
-					+ response.getStatusLine().getStatusCode());
+			throw new Exception("Server return code " + response.getStatusLine().getStatusCode());
+
+		// Set headers to the headers returned
+		headers.clear();
+		for (Header header : response.getAllHeaders())
+		{
+			headers.put(header.getName(), header.getValue());
+		}
+
+		// Return data received in response
 		ByteArrayOutputStream outstream = new ByteArrayOutputStream();
 		response.getEntity().writeTo(outstream);
 		return outstream.toByteArray();
 	}
 
-	// public byte[] postEncryptedData(String url, Map<String, String> headers,
-	// Map<String, String> params, int timeout)
-	// throws Exception
-	// {
-	// ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
-	// for (String key : params.keySet())
-	// parameters.add(new BasicNameValuePair(key, params.get(key)));
-	// byte[] data = URLEncodedUtils.format(parameters,
-	// HTTP.DEFAULT_CONTENT_CHARSET).getBytes();
-	// return postEncryptedData(url, headers, data, timeout);
-	// }
-
-	public byte[] getRawPair(String url, Map<String, String> headers,
-			ArrayList<NameValuePair> parameters, int timeout) throws Exception {
-
-		if (parameters != null && !url.contains("?")) {
-			url += "?"
-					+ URLEncodedUtils.format(parameters,
-							HTTP.DEFAULT_CONTENT_CHARSET);
-		} else if (parameters != null && url.contains("?")) {
-			url += "&"
-					+ URLEncodedUtils.format(parameters,
-							HTTP.DEFAULT_CONTENT_CHARSET);
-		}
-
-		HttpGet httpget = new HttpGet(url);
-		if (headers != null) {
-			for (String key : headers.keySet())
-				httpget.addHeader(key, headers.get(key));
-		}
-
-		System.out.println("URL " + url);
-		HttpClient httpclient = getHttpClient(timeout);
-		HttpResponse response = httpclient.execute(httpget);
-		System.out.println("URL Executed");
-		if (response == null)
-			throw new Exception("Null response");
-		if (response.getStatusLine().getStatusCode() != 200)
-			throw new Exception("Server return code "
-					+ response.getStatusLine().getStatusCode() + " for url "
-					+ url);
-		ByteArrayOutputStream outstream = new ByteArrayOutputStream();
-		response.getEntity().writeTo(outstream);
-		return outstream.toByteArray();
-	}
-
-	public byte[] postMultipartForm(String path, Map<String, String> headers,
-			Map<String, String> params, byte[] data, int timeout)
-			throws Exception {
+	public byte[] postMultipartForm(String path, Map<String, String> headers, Map<String, String> params, byte[] data,
+		int timeout) throws Exception
+	{
 		String url = path;
-		headers.put("Content-Type",
-				"multipart/form-data; boundary=" + BOUNDARY.substring(2));
+		headers.put("Content-Type", "multipart/form-data; boundary=" + BOUNDARY.substring(2));
 
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		output.write((BOUNDARY + ENDLINE).getBytes());
-		for (String k : params.keySet()) {
-			String msg = "Content-disposition: form-data; name=\"" + k + "\""
-					+ ENDLINE + ENDLINE;
+		for (String k : params.keySet())
+		{
+			String msg = "Content-disposition: form-data; name=\"" + k + "\"" + ENDLINE + ENDLINE;
 			// TODO encode the value to right encoding;
 			msg += params.get(k) + ENDLINE;
 			msg += BOUNDARY + ENDLINE;
 			output.write(msg.getBytes());
 		}
 		String filename = "anyname.jpeg";// TODO remove
-		String msg = "Content-disposition: form-data; name=\"file\"; filename=\""
-				+ filename + "\"" + ENDLINE;
+		String msg = "Content-disposition: form-data; name=\"file\"; filename=\"" + filename + "\"" + ENDLINE;
 		msg += "Content-Type: image/jpeg" + ENDLINE + ENDLINE;
 
 		output.write(msg.getBytes());
@@ -266,83 +253,90 @@ public class NetworkEngine {
 
 		// Set the headers to the headers returned in response
 		headers.clear();
-		for (Header header : response.getAllHeaders()) {
+		for (Header header : response.getAllHeaders())
+		{
 			headers.put(header.getName(), header.getValue());
 		}
 
-		// Returning the data received
+		//Returning the data received 
 		output.reset();
 		response.getEntity().writeTo(output);
-		if (response.getStatusLine().getStatusCode() != 200) {
-			throw new Exception("Server return code "
-					+ response.getStatusLine().getStatusCode());
+		if (response.getStatusLine().getStatusCode() != 200)
+		{
+			throw new Exception("Server return code " + response.getStatusLine().getStatusCode());
 		}
 		return output.toByteArray();
 	}
 
 	/*
-	 * This is a generic method to send POST request with a set of headers and
-	 * raw data
+	 * This is a generic method to send GET request with a set of headers and raw data
 	 */
-	public HttpResponse postRaw(String url, Map<String, String> headers,
-			byte[] data, int timeout) throws ClientProtocolException,
-			IOException {
-		HttpPost httppost = new HttpPost(url);
-		for (String key : headers.keySet()) {
-			httppost.addHeader(key, headers.get(key));
-			System.out.println("HEADER TO BE POSTED: " + key + "   "
-					+ headers.get(key));
+	public byte[] getRaw(String url, Map<String, String> headers,
+			Map<String, String> params, int timeout) throws Exception {
+
+		if (params != null && !url.contains("?")) {
+			ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
+			for (String key : params.keySet())
+				parameters.add(new BasicNameValuePair(key, params.get(key)));
+			url += "?"+ URLEncodedUtils.format(parameters,HTTP.DEFAULT_CONTENT_CHARSET);
+		}
+		else if(params != null && url.contains("?")){
+			ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
+			for (String key : params.keySet())
+				parameters.add(new BasicNameValuePair(key, params.get(key)));
+			url +="&"+ URLEncodedUtils.format(parameters,HTTP.DEFAULT_CONTENT_CHARSET);
+		}
+	
+		HttpGet httpget = new HttpGet(url);
+		if (headers != null) {
+			for (String key : headers.keySet())
+				httpget.addHeader(key, headers.get(key));
 		}
 
-		HttpEntity sendentity = new ByteArrayEntity(data);
-
-		httppost.setEntity(sendentity);
 		HttpClient httpclient = getHttpClient(timeout);
-		return httpclient.execute(httppost);
-	}
-
-	public byte[] postUnencrypted(String url, Map<String, String> headers,
-			Map<String, String> params, int timeout) throws Exception {
-		HttpResponse response;
-		response = postUrlencoded(url, headers, params, timeout);
+		HttpResponse response = httpclient.execute(httpget);
 		if (response == null)
 			throw new Exception("Null response");
 		if (response.getStatusLine().getStatusCode() != 200)
-			throw new Exception("Server return code "
-					+ response.getStatusLine().getStatusCode());
-
-		// Set headers to the headers returned
-		headers.clear();
-		for (Header header : response.getAllHeaders()) {
-			headers.put(header.getName(), header.getValue());
-		}
-
-		// Return data received in response
+			throw new Exception("Server return code " + response.getStatusLine().getStatusCode());
 		ByteArrayOutputStream outstream = new ByteArrayOutputStream();
 		response.getEntity().writeTo(outstream);
 		return outstream.toByteArray();
 	}
 
-	/*
-	 * This is a generic method to send POST request with a set of headers and
-	 * urlencoded parameters
-	 */
-	public HttpResponse postUrlencoded(String url, Map<String, String> headers,
-			Map<String, String> params, int timeout)
-			throws ClientProtocolException, IOException {
-		ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
-		if (params != null)
-			for (String key : params.keySet())
-				parameters.add(new BasicNameValuePair(key, params.get(key)));
+	public byte[] getRawPair(String url, Map<String, String> headers,
+			ArrayList<NameValuePair> parameters, int timeout) throws Exception {
 
-		if (headers == null)
-			headers = new HashMap<String, String>();
-		headers.put("Content-Type", "application/x-www-form-urlencoded");
+		if (parameters != null && !url.contains("?")) {
+			url += "?"+ URLEncodedUtils.format(parameters,HTTP.DEFAULT_CONTENT_CHARSET);
+		}
+		else if(parameters != null && url.contains("?")){
+			url +="&"+ URLEncodedUtils.format(parameters,HTTP.DEFAULT_CONTENT_CHARSET);
+		}
+	
+		HttpGet httpget = new HttpGet(url);
+		if (headers != null) {
+			for (String key : headers.keySet())
+				httpget.addHeader(key, headers.get(key));
+		}
 
-		return postRaw(url, headers,
-				URLEncodedUtils
-						.format(parameters, HTTP.DEFAULT_CONTENT_CHARSET)
-						.getBytes(), timeout);
+		System.out.println("URL "+url);
+		HttpClient httpclient = getHttpClient(timeout);
+		HttpResponse response = httpclient.execute(httpget);
+		System.out.println("URL Executed");
+		if (response == null)
+			throw new Exception("Null response");
+		if (response.getStatusLine().getStatusCode() != 200)
+			throw new Exception("Server return code " + response.getStatusLine().getStatusCode()+" for url "+url);
+		ByteArrayOutputStream outstream = new ByteArrayOutputStream();
+		response.getEntity().writeTo(outstream);
+		return outstream.toByteArray();
 	}
+	
+	public byte[] downloadImage(String url, Map<String, String> headers, Map<String, String> params, int timeout)
+			throws Exception
+		{
+			return getRaw(url, headers, params, timeout);
+		}
 
 }

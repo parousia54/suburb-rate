@@ -61,12 +61,6 @@ public class SuburbRateMapScreen extends MapActivity {
 	private int maxLongitude = (int) (-181 * 1E6);
 
 	@Override
-	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.map_screen);
@@ -80,10 +74,9 @@ public class SuburbRateMapScreen extends MapActivity {
 
 		QueryResponse qR = Controller.getInstance().getApplicationState()
 				.getBusinessesForSelectedCriterion();
-
-		suburb = Controller.getInstance().getApplicationState()
-				.getCurrentSuburb();
-
+		
+		suburb = Controller.getInstance().getApplicationState().getCurrentSuburb();
+		
 		Criterion selectedCr = Controller.getInstance().getApplicationState()
 				.getSelectedCriterion();
 
@@ -130,7 +123,7 @@ public class SuburbRateMapScreen extends MapActivity {
 			mapOverlays.clear();
 			mapView.invalidate();
 		}
-
+		
 		Log.d(logtag, "Selected Category : " + selectionCategory);
 		for (Criterion c : critList) {
 			if (selectionCategory == null || selectionCategory.matches("All")) {
@@ -202,6 +195,12 @@ public class SuburbRateMapScreen extends MapActivity {
 		mapcon.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2,
 				(maxLongitude + minLongitude) / 2));
 
+	}
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

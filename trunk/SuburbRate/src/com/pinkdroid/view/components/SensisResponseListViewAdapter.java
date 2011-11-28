@@ -3,16 +3,6 @@ package com.pinkdroid.view.components;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.pinkdroid.R;
 import com.pinkdroid.logic.Controller;
 import com.pinkdroid.model.ImageItem;
@@ -22,23 +12,27 @@ import com.pinkdroid.model.SensisContact;
 import com.pinkdroid.model.SensisResult;
 import com.pinkdroid.view.ScreenUpdater;
 
-public class SensisResponseListViewAdapter extends BaseAdapter implements
-		ScreenUpdater {
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class SensisResponseListViewAdapter extends BaseAdapter implements ScreenUpdater{
 	private Context context;
 	private QueryResponse sensisQueryResponse;
-	private Hashtable<Integer, Bitmap> bitmaps;
+	private Hashtable<Integer,Bitmap> bitmaps;
 
 	public SensisResponseListViewAdapter(Context context,
 			QueryResponse sensisQueryResponse) {
 		this.context = context;
 		this.sensisQueryResponse = sensisQueryResponse;
 		this.bitmaps = new Hashtable<Integer, Bitmap>();
-	}
-
-	@Override
-	public void displayMessage(String title, String message) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -77,18 +71,12 @@ public class SensisResponseListViewAdapter extends BaseAdapter implements
 		// System.out.println(result.getImageGallery().getFirst().getThumbnailUrl());
 		if (result.getImageGallery() != null
 				&& result.getImageGallery().size() > 0) {
-			if (!bitmaps.containsKey(pos))
-				Controller
-						.getInstance()
-						.getCommunicator()
-						.downloadImage(
-								this,
-								result.getImageGallery().getFirst()
-										.getThumbnailUrl(), pos);
+			if(!bitmaps.containsKey(pos))
+						Controller.getInstance().getCommunicator().downloadImage(this, result.getImageGallery().getFirst()
+					.getThumbnailUrl(), pos);
 			else
 				imageView.setImageBitmap(bitmaps.get(pos));
-		} else
-			imageView.setVisibility(View.GONE);
+		}else imageView.setVisibility(View.GONE);
 
 		TextView listingTypeTV = (TextView) convertView
 				.findViewById(R.id.custom_response_item_listing_type);
@@ -101,8 +89,7 @@ public class SensisResponseListViewAdapter extends BaseAdapter implements
 		for (int i = 0; i < primaryContacts.size(); i++) {
 			SensisContact contact = primaryContacts.get(i);
 			TextView contactTV = new TextView(context);
-			contactTV.setTextColor(Controller.getInstance().getResources()
-					.getColor(R.color.text_color));
+			contactTV.setTextColor(Controller.getInstance().getResources().getColor(R.color.text_color));
 			contactTV.setLinksClickable(true);
 			contactTV.setAutoLinkMask(15);
 			contactTV.setLayoutParams(new ViewGroup.LayoutParams(
@@ -118,8 +105,7 @@ public class SensisResponseListViewAdapter extends BaseAdapter implements
 		SensisAddress address = result.getPrimaryAddress();
 
 		TextView addressTV = new TextView(context);
-		addressTV.setTextColor(Controller.getInstance().getResources()
-				.getColor(R.color.text_color));
+		addressTV.setTextColor(Controller.getInstance().getResources().getColor(R.color.text_color));
 		addressTV.setLayoutParams(new ViewGroup.LayoutParams(
 				ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -131,12 +117,18 @@ public class SensisResponseListViewAdapter extends BaseAdapter implements
 
 	@Override
 	public void update(Object data) {
-		if (data instanceof ImageItem) {
+		if(data instanceof ImageItem){
 			ImageItem imageItem = (ImageItem) data;
 			bitmaps.put(imageItem.getPosition(), imageItem.getBitmap());
 			notifyDataSetInvalidated();
 		}
+		
+	}
 
+	@Override
+	public void displayMessage(String title, String message) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

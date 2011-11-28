@@ -2,5 +2,5 @@ package com.pinkdroid.networking;
 
 public interface Worker<Params, Result> {
 
-	public Result heavyTask(Params... params) throws Exception;
+	public Result heavyTask(Params ... params) throws Exception;
 }

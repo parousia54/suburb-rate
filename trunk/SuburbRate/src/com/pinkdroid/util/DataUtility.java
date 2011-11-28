@@ -8,15 +8,15 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 public class DataUtility {
-
+	
 	public static List<String> removeDuplicatesfromArrayList(
-			List<String> arrList) {
-		HashSet<String> h = new HashSet<String>(arrList);
-		arrList.clear();
-		arrList.addAll(h);
-		return arrList;
-	}
-
+            List<String> arrList) {
+    HashSet<String> h = new HashSet<String>(arrList);
+    arrList.clear();
+    arrList.addAll(h);
+    return arrList;
+}
+	
 	public static void setSelectedItem(Spinner spinner, String item) {
 		SpinnerAdapter sAdapter = spinner.getAdapter();
 		if (sAdapter instanceof ArrayAdapter<?>) {

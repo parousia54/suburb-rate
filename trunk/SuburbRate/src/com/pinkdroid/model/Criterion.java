@@ -8,37 +8,38 @@ public class Criterion {
 	private float parameter;
 	private int totalResults;
 
-	public LinkedList<SensisCategory> getCategories() {
-		return categories;
+	public int getTotalResults() {
+		return totalResults;
+	}
+
+	public void setTotalResults(int totalResults) {
+		System.out.println("set total results "+ totalResults);
+		this.totalResults = totalResults;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public float getParameter() {
-		return parameter;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public int getTotalResults() {
-		return totalResults;
+	public LinkedList<SensisCategory> getCategories() {
+		return categories;
 	}
 
 	public void setCategories(LinkedList<SensisCategory> categories) {
 		this.categories = categories;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public float getParameter() {
+		return parameter;
 	}
 
 	public void setParameter(float parameter) {
 		this.parameter = parameter;
 	}
-
-	public void setTotalResults(int totalResults) {
-		System.out.println("set total results " + totalResults);
-		this.totalResults = totalResults;
-	}
-
+	
+	
 }
