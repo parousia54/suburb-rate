@@ -104,6 +104,7 @@ public class CriteriaScreen extends Activity implements ScreenUpdater {
 	private Criterion selectedCriterion;
 	private ImageButton realEstBtn, domainBtn;
 	private Choice choice;
+	
 
 	ProgressDialog pDialog;
 
