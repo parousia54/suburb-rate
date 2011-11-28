@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/backgroundimage"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/suburb_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="20px"
+        android:text="Rating: "
+        android:textColor="@color/orange4"
+        android:textSize="30dp" />
+   
+    <TextView
+        android:id="@+id/total_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingLeft="20px"
+        android:text="Rating: "
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_below="@id/suburb_name"/>
+
+    <TextView
+        android:id="@+id/total_rate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text=""
+        android:textSize="20dp"
+        android:layout_below="@id/suburb_name" />
+    
+ 
+
+    <TableLayout
+        android:id="@+id/weblinktable"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/custom_button" >
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <ImageButton
+                android:id="@+id/real_estate_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_column="1"
+                android:adjustViewBounds="true"
+                android:background="@drawable/realestate" >
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <ImageButton
+                android:id="@+id/domain_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_column="3"
+                android:adjustViewBounds="true"
+                android:background="@drawable/domain" >
+            </ImageButton>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="4"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/weblinktable"
+        android:layout_below="@id/total_rate"
+        android:background="@android:color/transparent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/view_group_page"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip" >
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

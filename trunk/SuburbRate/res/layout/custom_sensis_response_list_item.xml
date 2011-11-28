@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:padding="5dp"
+	android:background="@color/text_background">
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="horizontal" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<ImageView android:id="@+id/custom_response_item_image"
+			android:layout_width="80dp" android:layout_height="wrap_content"
+			android:gravity="left" />
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:id="@+id/custom_response_item_title"
+			android:textSize="20sp" android:textStyle="bold"
+			android:textColor="@color/text_title" />
+
+	</LinearLayout>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:id="@+id/custom_response_item_listing_type"
+		android:textSize="17sp" 
+		android:textColor="@color/text_color"/>
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="Contacts: "
+		android:textSize="17sp" 
+		android:textColor="@color/text_color"/>
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:id="@+id/custom_response_item_contact_panel"
+		android:layout_marginLeft="10dip">
+
+	</LinearLayout>
+	<TextView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="Address: "
+		android:textSize="17sp" 
+		android:textColor="@color/text_color"/>
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:id="@+id/custom_response_item_address_panel"
+		android:layout_marginLeft="10dip">
+
+	</LinearLayout>
+</LinearLayout>

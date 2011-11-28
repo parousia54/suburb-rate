@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@drawable/backgroundimage" android:orientation="vertical"
+	android:layout_gravity="center"
+	android:padding="5dp"
+	>
+
+	<LinearLayout android:id="@+id/home_screen_top_bar"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_alignParentTop="true" android:orientation="horizontal"
+		>
+
+		<AutoCompleteTextView android:id="@+id/home_screen_search_input"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="1" android:hint="Enter suburb name or postcode" />
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/home_screen_gallery"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_below="@id/home_screen_top_bar" android:orientation="horizontal"
+		android:textColor="@color/text_color">
+
+		<Gallery android:id="@+id/gallery" android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:cacheColorHint="#00000000">
+		</Gallery>
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/home_screen_bottom_bar"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true" android:layout_gravity="bottom"
+		android:orientation="vertical"
+		android:textColor="@color/text_color">
+
+		<Button android:id="@+id/goBtn" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_gravity="center"
+			android:background="@drawable/custom_button" android:paddingLeft="30dip"
+			android:paddingRight="30dip" android:text="Get Preference Rating"
+			android:textSize="20sp" android:textStyle="bold" android:visibility="gone"
+			android:textColor="@color/text_color" />
+	</LinearLayout>
+
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:layout_above="@id/home_screen_bottom_bar"
+		android:layout_below="@id/home_screen_gallery"
+		android:textColor="@color/text_color">
+
+		<LinearLayout android:id="@+id/home_screen_info_panel"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:orientation="vertical">
+		</LinearLayout>
+	</ScrollView>
+
+</RelativeLayout>
