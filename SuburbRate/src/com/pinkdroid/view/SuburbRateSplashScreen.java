@@ -1,30 +1,16 @@
 package com.pinkdroid.view;
 
+import com.pinkdroid.R;
+import com.pinkdroid.logic.Controller;
+import com.pinkdroid.model.Suburb;
+import com.pinkdroid.ws.RatingAPICaller;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
-import com.pinkdroid.R;
-import com.pinkdroid.logic.Controller;
-
 public class SuburbRateSplashScreen extends SuburbRateScreen {
-
-	private void doWait() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	protected void goNext() {
-		dismissDialog(DIALOG_PROGRESS);
-		Intent intent = new Intent(this, SuburbRateHomeScreen.class);
-		startActivity(intent);
-
-	}
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -37,8 +23,8 @@ public class SuburbRateSplashScreen extends SuburbRateScreen {
 				R.drawable.splashscreen));
 
 		displayProgress("Data Fetching",
-				"Getting a few stuff. Might take a little bit of time :)\n"
-						+ "Rest assured it wont happen the next time ;)");
+				"Getting a few stuff. Might take a little bit of time :)\n" +
+				"Rest assured it wont happen the next time ;)");
 
 		AsyncTask<Object, Integer, Object> task = new AsyncTask<Object, Integer, Object>() {
 			@Override
@@ -58,6 +44,22 @@ public class SuburbRateSplashScreen extends SuburbRateScreen {
 			}
 		};
 		task.execute("");
+	}
+
+	protected void goNext() {
+		dismissDialog(DIALOG_PROGRESS);
+		Intent intent = new Intent(this, SuburbRateHomeScreen.class);
+		startActivity(intent);
+
+	}
+
+	private void doWait() {
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

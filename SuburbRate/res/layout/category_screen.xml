@@ -6,7 +6,7 @@
     android:orientation="vertical" >
     <TextView
         android:id="@+id/suburb_name"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingLeft="20px"
@@ -16,7 +16,7 @@
    
     <TextView
         android:id="@+id/total_text"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
         android:paddingLeft="20px"

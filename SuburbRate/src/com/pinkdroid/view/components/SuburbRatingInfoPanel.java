@@ -1,12 +1,12 @@
 package com.pinkdroid.view.components;
 
+import com.pinkdroid.R;
+
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.pinkdroid.R;
 
 public class SuburbRatingInfoPanel extends SuburbInfoPanel {
 
