@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+android:layout_width="fill_parent"
+android:layout_height="wrap_content" 
+android:orientation="horizontal">
+	<TextView 
+	    android:id="@+id/custom_dropdown_suburb"
+	    style="?android:attr/dropDownItemStyle"
+	    android:textAppearance="?android:attr/textAppearanceLargeInverse"
+	    android:layout_width="wrap_content"
+	    android:layout_height="42dip"
+	    android:textColor="@color/foreground"
+	    android:ellipsize="marquee"
+	    android:textSize="18dp" />
+	    
+    <TextView 
+	    android:id="@+id/custom_dropdown_postcode"
+	    style="?android:attr/dropDownItemStyle"
+	    android:textAppearance="?android:attr/textAppearanceLargeInverse"
+	    android:layout_width="wrap_content"
+	    android:layout_height="42dip"
+	    android:textColor="@color/foreground"
+	    android:ellipsize="marquee"
+	    android:textSize="18dp" />
+	    
+    <TextView 
+	    android:id="@+id/custom_dropdown_state"
+	    style="?android:attr/dropDownItemStyle"
+	    android:textAppearance="?android:attr/textAppearanceLargeInverse"
+	    android:layout_width="wrap_content"
+	    android:layout_height="42dip"
+	    android:textColor="@color/foreground"
+	    android:ellipsize="marquee" 
+	    android:textSize="18dp"/>
+	    
+</LinearLayout>
