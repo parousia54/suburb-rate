@@ -24,7 +24,7 @@ import com.pinkdroid.R;
 import com.pinkdroid.logic.Controller;
 import com.pinkdroid.model.Criterion;
 
-public class CriteriaScreen extends Activity implements ScreenUpdater {
+public class SuburbRateCriteriaScreen extends Activity implements ScreenUpdater {
 
 	private static String logtag = "CrieriaScreen";
 
@@ -73,7 +73,7 @@ public class CriteriaScreen extends Activity implements ScreenUpdater {
 			if (val-- > NEGATIVE_LIMIT) {
 				value.setText(String.valueOf(val));
 				criterion.setParameter((float) (val));
-				controller.getCriterionValue(CriteriaScreen.this, criterion);
+				controller.getCriterionValue(SuburbRateCriteriaScreen.this, criterion);
 				// double totalVal =
 				// controller.computeRankingCriteria(criterion);
 				// totalValue.setText(String.valueOf(totalVal));
@@ -101,7 +101,7 @@ public class CriteriaScreen extends Activity implements ScreenUpdater {
 			if (val++ < POSITIVE_LIMIT) {
 				value.setText(String.valueOf(val));	
 				criterion.setParameter((float) (val ));
-				controller.getCriterionValue(CriteriaScreen.this, criterion);
+				controller.getCriterionValue(SuburbRateCriteriaScreen.this, criterion);
 
 			}
 		}
@@ -126,7 +126,7 @@ public class CriteriaScreen extends Activity implements ScreenUpdater {
 			@Override
 			public void onClick(View v) {
 				selectedCriterion = criterion;
-				controller.chooseCriterion(CriteriaScreen.this,
+				controller.chooseCriterion(SuburbRateCriteriaScreen.this,
 						selectedCriterion);
 				
 				showDialog(CHOICE_DIALOG);
