@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="match_parent" android:background="@drawable/panel"
-	android:layout_margin="3dp"
+	android:layout_margin="1dp"
 	android:gravity="center_vertical">
 	
 	<TextView android:id="@+id/criterion_name"
