@@ -1,11 +1,10 @@
 [
 {"totalResults":324,"name":"Education","categories":[{"name":"Schools--General","id":"24082","sensitive":false},{"name":"Universities & Tertiary Education Colleges","id":"35408","sensitive":false}]},
 {"totalResults":2215,"name":"Medical","categories":[{"name":"Medical Centres","id":"47376","sensitive":false},{"name":"Pharmacies","id":"18597","sensitive":false}]},
-{"totalResults":1511,"name":"Health","categories":[{"name":"Health and Fitness Centres and Services","id":"18023","sensitive":false},{"name":"Clubs -- Sporting -- Miscellaneous","id":"35173","sensitive":false}]},
+{"totalResults":1511,"name":"Lifestyle","categories":[{"name":"Health and Fitness Centres and Services","id":"18023","sensitive":false},{"name":"Clubs -- Sporting -- Miscellaneous","id":"35173","sensitive":false}]},
 {"totalResults":10849,"name":"Food","categories":[{"name":"Restaurants","id":"33650","sensitive":false},{"name":"Take Away Food","id":"11827","sensitive":false},{"name":"Pizzas","id":"47589","sensitive":false}]},
 {"totalResults":251,"name":"Entertainment","categories":[{"name":"Cinemas","id":"20508","sensitive":false},{"name":"Theatres & Theatre Companies","id":"45306","sensitive":false}]},
-{"totalResults":3289,"name":"Lifestyle","categories":[{"name":"Bars","id":"10472","sensitive":false},{"name":"Cafes","id":"35491","sensitive":false}]},
-{"totalResults":153,"name":"Night-life","categories":[{"name":"Nightclubs","id":"32646","sensitive":false},{"name":"Adult Entertainment & Services","id":"47341","sensitive":false}]},
+{"totalResults":3442,"name":"Night-life","categories":[{"name":"Bars","id":"10472","sensitive":false},{"name":"Cafes","id":"35491","sensitive":false},{"name":"Nightclubs","id":"32646","sensitive":false},{"name":"Adult Entertainment & Services","id":"47341","sensitive":false}]},
 {"totalResults":614,"name":"Culture","categories":[{"name":"Art Galleries","id":"10715","sensitive":false},{"name":"Museums","id":"10782","sensitive":false}]},
 {"totalResults":139,"name":"Shopping","categories":[{"name":"Shopping Centres","id":"33839","sensitive":false}]},
 {"totalResults":896,"name":"Banking","categories":[{"name":"Banking or Other Financial Services","id":"25151","sensitive":false}]},

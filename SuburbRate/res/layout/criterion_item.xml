@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="horizontal" android:layout_width="fill_parent"
+	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="match_parent" android:background="@drawable/panel"
 	android:layout_margin="3dp"
 	android:gravity="center_vertical">
 	
 	<TextView android:id="@+id/criterion_name"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
 		android:gravity="center_vertical" android:textSize="16dp"
 		android:textColor="@color/text_color"
-		android:paddingLeft="10dp"/>
+		android:paddingLeft="3dp"/>
 
 	<LinearLayout android:orientation="horizontal"
+	    android:layout_gravity="center_horizontal"
 		android:layout_width="match_parent" android:layout_height="wrap_content"
-		android:gravity="right" >
+		android:gravity="center" >
 		<Button android:id="@+id/minus" android:layout_width="50px"
 			android:layout_height="50px" android:text="-" />
 		<TextView android:id="@+id/value" android:layout_width="50px"
