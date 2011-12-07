@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import com.pinkdroid.R;
 import com.pinkdroid.logic.Controller;
 import com.pinkdroid.model.Criterion;
+import com.pinkdroid.view.components.CriteriaGridAdapter;
 
 public class SuburbRateCriteriaScreen extends Activity implements ScreenUpdater {
 
@@ -115,7 +117,7 @@ public class SuburbRateCriteriaScreen extends Activity implements ScreenUpdater 
 		plus.setOnClickListener(new PlusClickListener(criterion, value));
 	}
 
-	private View createViewFromCriterion(final Criterion criterion) {
+	public View createViewFromCriterion(final Criterion criterion) {
 
 		LayoutInflater inflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -142,14 +144,10 @@ public class SuburbRateCriteriaScreen extends Activity implements ScreenUpdater 
 	}
 
 	private void addCriteria() {
-		LinearLayout linearLayout = (LinearLayout) this
+		GridView grid = (GridView) this
 				.findViewById(R.id.view_group_page);
+		grid.setAdapter(new CriteriaGridAdapter(this));
 
-		for (Criterion crit : controller.getCriteria()) {
-			System.out.println("Criterion name " + crit.getName());
-			View view = createViewFromCriterion(crit);
-			linearLayout.addView(view);
-		}
 
 	}
 

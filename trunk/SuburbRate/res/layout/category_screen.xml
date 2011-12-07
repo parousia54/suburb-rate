@@ -4,6 +4,7 @@
     android:layout_height="fill_parent"
     android:background="@drawable/backgroundimage"
     android:orientation="vertical" >
+
     <TextView
         android:id="@+id/suburb_name"
         android:layout_width="match_parent"
@@ -13,28 +14,26 @@
         android:text="Rating: "
         android:textColor="@color/orange4"
         android:textSize="30dp" />
-   
+
     <TextView
         android:id="@+id/total_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/suburb_name"
         android:gravity="left"
         android:paddingLeft="20px"
         android:text="Rating: "
         android:textColor="@color/black"
-        android:textSize="20dp"
-        android:layout_below="@id/suburb_name"/>
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/total_rate"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/suburb_name"
         android:gravity="center_horizontal"
         android:text=""
-        android:textSize="20dp"
-        android:layout_below="@id/suburb_name" />
-    
- 
+        android:textSize="20dp" />
 
     <TableLayout
         android:id="@+id/weblinktable"
@@ -93,22 +92,17 @@
         </TableRow>
     </TableLayout>
 
-    <ScrollView
+    <GridView
+        android:id="@+id/view_group_page"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/weblinktable"
         android:layout_below="@id/total_rate"
         android:background="@android:color/transparent"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:id="@+id/view_group_page"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip" >
-        </LinearLayout>
-    </ScrollView>
+        android:horizontalSpacing="20dip"
+        android:numColumns="2"
+        android:orientation="vertical"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="20dip" />
 
 </RelativeLayout>
