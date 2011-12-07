@@ -57,7 +57,7 @@ public class SuburbRateHomeScreen extends SuburbRateScreen {
 			public void onClick(View v) {
 				Log.d(logname, "Got here successfully");
 				Intent intent = new Intent(SuburbRateHomeScreen.this,
-						CriteriaScreen.class);
+						SuburbRateCriteriaScreen.class);
 				startActivity(intent);
 			}
 		});
