@@ -26,7 +26,7 @@ import com.pinkdroid.logic.Controller;
 import com.pinkdroid.model.Criterion;
 import com.pinkdroid.view.components.CriteriaGridAdapter;
 
-public class SuburbRateCriteriaScreen extends Activity implements ScreenUpdater {
+public class SuburbRateCriteriaScreen extends SuburbRateScreen implements ScreenUpdater {
 
 	private static String logtag = "CrieriaScreen";
 
@@ -170,6 +170,11 @@ public class SuburbRateCriteriaScreen extends Activity implements ScreenUpdater 
 			@Override
 			public void onClick(View v) {
 				lookForRealEstate(REALESTATE);
+				Controller.getInstance().getTracker().trackEvent(
+		                "Clicks",  // Category
+		                "Button",  // Action
+		                "Real Estate Website", // Label
+		                0);
 			}
 		});
 
@@ -178,6 +183,11 @@ public class SuburbRateCriteriaScreen extends Activity implements ScreenUpdater 
 			@Override
 			public void onClick(View v) {
 				lookForRealEstate(DOMAIN);
+		        Controller.getInstance().getTracker().trackEvent(
+		                "Clicks",  // Category
+		                "Button",  // Action
+		                "Domain Website", // Label
+		                0);  
 			}
 		});
 
@@ -371,7 +381,6 @@ public class SuburbRateCriteriaScreen extends Activity implements ScreenUpdater 
 
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
-		super.onPrepareDialog(id, dialog);
 		dialog.show();
 	}
 

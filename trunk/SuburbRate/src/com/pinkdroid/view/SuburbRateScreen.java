@@ -1,6 +1,8 @@
 package com.pinkdroid.view;
 
 
+import com.pinkdroid.logic.Controller;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -14,11 +16,27 @@ public class SuburbRateScreen extends Activity implements ScreenUpdater{
 	private AlertDialog.Builder builder;
 	private AlertDialog alert;	
 	@Override
-	public void onCreate(Bundle bundle){
+	protected void onCreate(Bundle bundle){
 		super.onCreate(bundle);
 		builder = new AlertDialog.Builder(this);
 		progress = new ProgressDialog(this);
 		progress.setCancelable(false);
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		trackActivity();
+	}
+	
+	private void trackActivity() {
+		// TODO Auto-generated method stub
+		Controller controller = Controller.getInstance();
+		if(controller.getTracker()!= null){
+			controller.getTracker().trackPageView("/"+this.getClass().getName());
+			System.out.println("Page view for "+this.getClass().getName());
+		}
 	}
 
 	@Override
@@ -60,7 +78,7 @@ public class SuburbRateScreen extends Activity implements ScreenUpdater{
         return dialog;
     }
 	@Override
-	public void onPrepareDialog(int id, Dialog dialog){
+	protected void onPrepareDialog(int id, Dialog dialog){
 		switch(id){		 	
 		 	case DIALOG_PROGRESS:{
 				((ProgressDialog)dialog).setMessage(dialogMessage);

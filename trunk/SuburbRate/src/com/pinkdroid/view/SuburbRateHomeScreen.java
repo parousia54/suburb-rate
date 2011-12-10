@@ -73,6 +73,7 @@ public class SuburbRateHomeScreen extends SuburbRateScreen {
 	
 	}
 	
+
 	public void getSuburbInfo(){
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
@@ -90,10 +91,20 @@ public class SuburbRateHomeScreen extends SuburbRateScreen {
 		else
 			displayMessage("Warning", "No info available for this suburb!!");
 	}
+	
+	protected void trackSuburbSearch(Suburb suburb){
+		Controller.getInstance().getTracker().trackEvent(
+                "Search",  // Category
+                "Found",  // Action
+                suburb.getName(), // Label
+                suburb.getPostcode());
+	}
+	
 	public void displaySuburbInfo(){
 		Suburb suburb = Controller.getInstance().getApplicationState().getCurrentSuburb();
 		SuburbStats stats = suburb.getStatistics();
 		LinearLayout layout = (LinearLayout)findViewById(R.id.home_screen_info_panel);
+		trackSuburbSearch(suburb);
 		layout.removeAllViews();
 		if(stats!=null){
 			SensisAPICaller caller = SensisAPICaller.getInstance();
