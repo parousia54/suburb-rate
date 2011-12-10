@@ -8,6 +8,7 @@ import android.app.Application;
 import android.database.Cursor;
 import android.view.View;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.pinkdroid.R;
 import com.pinkdroid.io.ExternalFileReader;
 import com.pinkdroid.model.Criterion;
@@ -20,7 +21,11 @@ import com.pinkdroid.view.ScreenUpdater;
 import com.pinkdroid.ws.SensisAPICaller;
 
 public class Controller extends Application {
+
+	private static final String UA_ID = "UA-27628323-1";
+
 	private static Controller instance;
+	private GoogleAnalyticsTracker tracker;
 	private Collection<Criterion> criteria;
 	private DatabaseManager dbManager;
 	private Communicator communicator;
@@ -42,7 +47,19 @@ public class Controller extends Application {
 		setCommunicator(new Communicator());
 		setApplicationState(new ApplicationState());
 		initiate();
-		
+
+	}
+
+	@Override
+	public void onTerminate() {
+		// TODO Auto-generated method stub
+		super.onTerminate();
+		release();
+	}
+
+	private void release() {
+		// TODO Auto-generated method stub
+		tracker.stopSession();
 	}
 
 	public void setDbManager(DatabaseManager dbManager) {
@@ -56,6 +73,12 @@ public class Controller extends Application {
 	private void initiate() {
 
 		try {
+
+			tracker = GoogleAnalyticsTracker.getInstance();
+
+			// Start the tracker in manual dispatch mode...
+			tracker.startNewSession(UA_ID, 10, this);
+
 			ratings = new HashMap<Criterion, Double>();
 			ExternalFileReader reader = new ExternalFileReader(this);
 			reader.setInputStream(getResources()
@@ -126,15 +149,23 @@ public class Controller extends Application {
 	}
 
 	public boolean doDatabaseStuff() {
-		
+
 		Cursor cursor = DatabaseAccessHelper.getMatchingSuburbSearch(dbManager,
-		"3000");
+				"3000");
 		if (cursor == null || cursor.getCount() <= 0) {
 			DatabaseAccessHelper.cleanDatabase(dbManager);
 			FileReadingUtil.insertSuburbsToDb(this, "vicdump.txt", dbManager);
 		}
 		return true;
-		
+
+	}
+
+	public GoogleAnalyticsTracker getTracker() {
+		return tracker;
+	}
+
+	public void setTracker(GoogleAnalyticsTracker tracker) {
+		this.tracker = tracker;
 	}
 
 }
