@@ -28,7 +28,8 @@ public class SensisAPICaller {
 	private static final String ROWS = "rows";
 	private static final String CONTENT = "content";
 	private static final String KEY = "key";
-	private static final String sensisApiKey = "ergdteane92h6u9hycnhkuvy";
+	private static final String[] sensisApiKeys = {"ergdteane92h6u9hycnhkuvy", "26zac3pbk9fdq6ane8cqk3s2"};
+	private static int rrIndex=0;
 	private static final String QUERY = "query";
 	private static final String LOCATION = "location";
 	
@@ -46,6 +47,12 @@ public class SensisAPICaller {
 		return instance;
 	}
 	
+	protected static String getSensisApiKey() {
+		rrIndex=(rrIndex+1)%sensisApiKeys.length;
+		System.out.println("The key no. "+rrIndex+","+sensisApiKeys[rrIndex]+" is used");
+		return sensisApiKeys[rrIndex];
+	}
+	
 	/*http://api.sensis.com.au/ob-20110511/test/search?location=-37.81125,144.9656&key=26zac3pbk9fdq6ane8cqk3s2*/
 	public int searchPostCodeByLocation(double latitude, double longtitude) {
 		// ?categoryId=14532&categoryId=41718
@@ -55,7 +62,7 @@ public class SensisAPICaller {
 		Hashtable<String, String> headers = new Hashtable<String, String>();
 		ArrayList<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
-		parameters.add(new BasicNameValuePair(KEY, sensisApiKey));
+		parameters.add(new BasicNameValuePair(KEY, getSensisApiKey()));
 		parameters.add(new BasicNameValuePair(LOCATION, ""+latitude+","+longtitude));
 		try {
 
@@ -126,7 +133,7 @@ public class SensisAPICaller {
 				.valueOf(suburb.getPostcode())));
 		parameters.add(new BasicNameValuePair(ROWS, "1"));
 //		parameters.add(new BasicNameValuePair(CONTENT, "shortDescriptor"));
-		parameters.add(new BasicNameValuePair(KEY, sensisApiKey));
+		parameters.add(new BasicNameValuePair(KEY, getSensisApiKey()));
 		parameters.add(new BasicNameValuePair(QUERY, suburb.getState()));
 		try {
 
@@ -169,7 +176,7 @@ public class SensisAPICaller {
 				.valueOf(suburb.getPostcode())));
 		parameters.add(new BasicNameValuePair(ROWS, "10"));
 		parameters.add(new BasicNameValuePair(CONTENT, "imageGallery"));
-		parameters.add(new BasicNameValuePair(KEY, sensisApiKey));
+		parameters.add(new BasicNameValuePair(KEY, getSensisApiKey()));
 		parameters.add(new BasicNameValuePair(QUERY, suburb.getState()));
 		try {
 
@@ -244,7 +251,7 @@ public class SensisAPICaller {
 		parameters.add(new BasicNameValuePair(ROWS, String
 				.valueOf(SEARCH_LIMIT)));
 //		parameters.add(new BasicNameValuePair(CONTENT, "mediumDescriptor"));
-		parameters.add(new BasicNameValuePair(KEY, sensisApiKey));
+		parameters.add(new BasicNameValuePair(KEY, getSensisApiKey()));
 		parameters.add(new BasicNameValuePair(QUERY, suburb.getState()));
 		try {
 
